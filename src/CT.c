@@ -205,7 +205,7 @@ void CT(int n, double *y[], double *x, int nclass, int edge, double *improve, do
         }
         
         *improve = best;
-        if (best > 10000) {         /* found something */
+        if (best > 0) {         /* found something */
         csplit[0] = direction;
             *split = (x[where] + x[where + 1]) / 2; 
         }
