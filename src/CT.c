@@ -73,7 +73,7 @@ CTss(int n, double *y[], double *value,  double *con_mean, double *tr_mean,
     *value = effect;
     *risk = 4 * twt * max_y * max_y - alpha * twt * effect * effect + 
     (1 - alpha) * (1 + train_to_est_ratio) * twt * (tr_var /ttreat  + con_var / (twt - ttreat));
-    warning("Warning message--at CTss");
+    Rprintf("Warning message--at CTss");
 }
 
 
@@ -209,7 +209,7 @@ void CT(int n, double *y[], double *x, int nclass, int edge, double *improve, do
             *split = (x[where] + x[where + 1]) / 2; 
         }
     
-        warning("Warning message--at continuous CT");
+        Rprintf("Warning message--at continuous CT");
     }
     
     /*
@@ -329,7 +329,7 @@ void CT(int n, double *y[], double *x, int nclass, int edge, double *improve, do
         }
         *improve = best;
     }
-warning("Warning message--at categorial CT");
+Rprintf("Warning message--at categorial CT");
         
 }
 
