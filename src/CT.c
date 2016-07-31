@@ -64,8 +64,8 @@ CTss(int n, double *y[], double *value,  double *con_mean, double *tr_mean,
         tinvsp0 += wt[i] * (1 - treatment[i]) / (1 - propensity[i]) / (1 - propensity[i]);
     }
 
-    effect = temp1 / ttreat - temp0 / (twt - ttreat);
-    /*effect = invp1 / tinvp1 - invp0 / tinvp0;*/ 
+    /*effect = temp1 / ttreat - temp0 / (twt - ttreat);*/
+    effect = invp1 / tinvp1 - invp0 / tinvp0; 
     tr_var = tr_sqr_sum / ttreat - temp1 * temp1 / (ttreat * ttreat);
     con_var = con_sqr_sum / (twt - ttreat) - temp0 * temp0 / ((twt - ttreat) * (twt - ttreat));
     *tr_mean = temp1 / ttreat;
