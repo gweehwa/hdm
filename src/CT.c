@@ -38,7 +38,7 @@ CTinit(int n, double *y[], int maxcat, char **error,
 void
 CTss(int n, double *y[], double *value,  double *con_mean, double *tr_mean, 
      double *risk, double *wt, double *treatment, double max_y,
-     double alpha, double train_to_est_ratio, double *propensity[])
+     double alpha, double train_to_est_ratio, double *propensity)
 {
     int i;
     double temp0 = 0., temp1 = 0., twt = 0.; /* sum of the weights */ 
@@ -56,16 +56,16 @@ CTss(int n, double *y[], double *value,  double *con_mean, double *tr_mean,
         ttreat += wt[i] * treatment[i];
         tr_sqr_sum += (*y[i]) * (*y[i]) * wt[i] * treatment[i];
         con_sqr_sum += (*y[i]) * (*y[i]) * wt[i] * (1- treatment[i]);
-        invp1 += *y[i] * wt[i] * treatment[i] / *propensity[i];
-        invp0 += *y[i] * wt[i] * (1 - treatment[i]) / (1 - *propensity[i]);
-        tinvp1 += wt[i] * treatment[i] / *propensity[i];
-        tinvp0 += wt[i] * (1 - treatment[i]) / (1 - *propensity[i]);
-        tinvsp1 += wt[i] * treatment[i] / *propensity[i] / *propensity[i];
-        tinvsp0 += wt[i] * (1 - treatment[i]) / (1 - *propensity[i]) / (1 - *propensity[i]);
+        invp1 += *y[i] * wt[i] * treatment[i] / propensity[i];
+        invp0 += *y[i] * wt[i] * (1 - treatment[i]) / (1 - propensity[i]);
+        tinvp1 += wt[i] * treatment[i] / propensity[i];
+        tinvp0 += wt[i] * (1 - treatment[i]) / (1 - propensity[i]);
+        tinvsp1 += wt[i] * treatment[i] / propensity[i] / propensity[i];
+        tinvsp0 += wt[i] * (1 - treatment[i]) / (1 - propensity[i]) / (1 - propensity[i]);
     }
 
-    /*effect = temp1 / ttreat - temp0 / (twt - ttreat);*/
-    effect = invp1 / tinvp1 - invp0 / tinvp0; 
+    effect = temp1 / ttreat - temp0 / (twt - ttreat);
+    /*effect = invp1 / tinvp1 - invp0 / tinvp0;*/ 
     tr_var = tr_sqr_sum / ttreat - temp1 * temp1 / (ttreat * ttreat);
     con_var = con_sqr_sum / (twt - ttreat) - temp0 * temp0 / ((twt - ttreat) * (twt - ttreat));
     *tr_mean = temp1 / ttreat;
@@ -123,8 +123,8 @@ void CT(int n, double *y[], double *x, int nclass, int edge, double *improve, do
         right_tinvsp0 += wt[i] * (1 - treatment[i]) / (1 - propensity[i]) / (1 - propensity[i]);
     }
     
-    /*temp = right_tr_sum / right_tr - (right_sum - right_tr_sum) / (right_wt - right_tr);*/
-    temp = right_invp1 / right_tinvp1 - right_invp1 / right_tinvp1; 
+    temp = right_tr_sum / right_tr - (right_sum - right_tr_sum) / (right_wt - right_tr);
+    /*temp = right_invp1 / right_tinvp1 - right_invp1 / right_tinvp1; */
     tr_var = right_tr_sqr_sum / right_tr - right_tr_sum * right_tr_sum / (right_tr * right_tr);
     con_var = (right_sqr_sum - right_tr_sqr_sum) / (right_wt - right_tr)
         - (right_sum - right_tr_sum) * (right_sum - right_tr_sum) 
