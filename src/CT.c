@@ -142,6 +142,8 @@ void CT(int n, double *y[], double *x, int nclass, int edge, double *improve, do
         left_sqr_sum = 0;
         left_tr_sqr_sum = 0;
         best = 0;
+        double left_invp0 = 0., left_invp1 = 0., left_tinvp0 = 0., left_tinvp1 = 0.; 
+        double left_tinvsp0 = 0., left_tinvsp1 = 0.;
         
         for (i = 0; right_n > edge; i++) {
             left_wt += wt[i];
@@ -161,7 +163,19 @@ void CT(int n, double *y[], double *x, int nclass, int edge, double *improve, do
             temp = (*y[i]) * (*y[i]) * wt[i] * treatment[i];
             left_tr_sqr_sum += temp;
             right_tr_sqr_sum -= temp;
+            right_invp1 -= *y[i] * wt[i] * treatment[i] / propensity[i];
+            right_invp0 -= *y[i] * wt[i] * (1 - treatment[i]) / (1 - propensity[i]);
+            right_tinvp1 -= wt[i] * treatment[i] / propensity[i];
+            right_tinvp0 -= wt[i] * (1 - treatment[i]) / (1 - propensity[i]);
+            right_tinvsp1 -= wt[i] * treatment[i] / propensity[i] / propensity[i];
+            right_tinvsp0 -= wt[i] * (1 - treatment[i]) / (1 - propensity[i]) / (1 - propensity[i]);
             
+            left_invp1 += *y[i] * wt[i] * treatment[i] / propensity[i];
+            left_invp0 += *y[i] * wt[i] * (1 - treatment[i]) / (1 - propensity[i]);
+            left_tinvp1 += wt[i] * treatment[i] / propensity[i];
+            left_tinvp0 += wt[i] * (1 - treatment[i]) / (1 - propensity[i]);
+            left_tinvsp1 += wt[i] * treatment[i] / propensity[i] / propensity[i];
+            left_tinvsp0 += wt[i] * (1 - treatment[i]) / (1 - propensity[i]) / (1 - propensity[i]);
             
             if (x[i + 1] != x[i] && left_n >= edge &&
                 (int) left_tr >= min_node_size &&
@@ -169,8 +183,9 @@ void CT(int n, double *y[], double *x, int nclass, int edge, double *improve, do
                 (int) right_tr >= min_node_size &&
                 (int) right_wt - (int) right_tr >= min_node_size) {
     
-                left_temp = left_tr_sum / left_tr - 
-                    (left_sum - left_tr_sum) / (left_wt - left_tr);
+                /*left_temp = left_tr_sum / left_tr - 
+                    (left_sum - left_tr_sum) / (left_wt - left_tr);*/
+                left_temp = left_invp1 / left_tinvp1 - left_invp0 / left_tinvp0;
                 left_tr_var = left_tr_sqr_sum / left_tr - 
                     left_tr_sum  * left_tr_sum / (left_tr * left_tr);
                 left_con_var = (left_sqr_sum - left_tr_sqr_sum) / (left_wt - left_tr)  
@@ -180,8 +195,9 @@ void CT(int n, double *y[], double *x, int nclass, int edge, double *improve, do
                         - (1 - alpha) * (1 + train_to_est_ratio) * left_wt 
                     * (left_tr_var / left_tr + left_con_var / (left_wt - left_tr));
                 
-                right_temp = right_tr_sum / right_tr -
-                    (right_sum - right_tr_sum) / (right_wt - right_tr);
+                /*right_temp = right_tr_sum / right_tr -
+                    (right_sum - right_tr_sum) / (right_wt - right_tr);*/
+                right_temp = right_invp1 / right_tinvp1 - right_invp0 / right_tinvp0;   
                 right_tr_var = right_tr_sqr_sum / right_tr -
                     right_tr_sum * right_tr_sum / (right_tr * right_tr);
                 right_con_var = (right_sqr_sum - right_tr_sqr_sum) / (right_wt - right_tr)
