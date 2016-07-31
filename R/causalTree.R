@@ -51,7 +51,7 @@ causalTree <- function(formula, data, weights, treatment, subset,
 	
     ## check propensity score
 	if (missing(propensity)) {
-		propensity <- sum(treatment) / nobs
+		stop("Propensity is missing.")
 	}
 
 	## check the Split.Rule:
