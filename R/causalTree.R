@@ -15,7 +15,7 @@ causalTree <- function(formula, data, weights, treatment, subset,
 	indx <- match(c("formula", "data", "weights", "subset"),
 				  names(Call), nomatch = 0L)
 
-	if (indx[1] == 0L) stop("a 'formula' argument is required")
+	if (indx[1] == 0L) stop("a 'formula' argument IS required")
 	temp <- Call[c(1L, indx)]      
 	temp$na.action <- na.action  
 	temp[[1L]] <- quote(stats::model.frame) 
