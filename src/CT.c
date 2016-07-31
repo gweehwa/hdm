@@ -209,8 +209,6 @@ void CT(int n, double *y[], double *x, int nclass, int edge, double *improve, do
             *split = (x[where] + x[where + 1]) / 2; 
         }
     
-        Rprintf("Warning message--at continuous CT");
-        error(_("at continuous CT"));
     }
     
     /*
@@ -331,7 +329,7 @@ void CT(int n, double *y[], double *x, int nclass, int edge, double *improve, do
         *improve = best;
     }
 Rprintf("Warning message--at categorial CT");
-error(_("at continuous CT"));
+error(_("at categorical CT"));
         
 }
 
