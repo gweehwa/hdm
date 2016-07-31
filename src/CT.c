@@ -68,7 +68,7 @@ CTss(int n, double *y[], double *value,  double *con_mean, double *tr_mean,
     effect = invp1 / tinvp1 - invp0 / tinvp0; 
     tr_var = tr_sqr_sum / ttreat - temp1 * temp1 / (ttreat * ttreat);
     con_var = con_sqr_sum / (twt - ttreat) - temp0 * temp0 / ((twt - ttreat) * (twt - ttreat));
-
+    printf("hello\n");
     *tr_mean = temp1 / ttreat;
     *con_mean = temp0 / (twt - ttreat);
     *value = effect;
