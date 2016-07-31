@@ -83,7 +83,7 @@ causalTree(SEXP ncat2, SEXP split_Rule2, SEXP bucketnum2, SEXP bucketMax2, SEXP 
     double *treatment;
     int minsize;
     /* add propensity score: */
-    double propensity;
+    double *propensity; /*change to vector*/
     double split_alpha, cv_alpha;
     int NumHonest;
     double train_to_est_ratio = 0.;
@@ -109,7 +109,7 @@ causalTree(SEXP ncat2, SEXP split_Rule2, SEXP bucketnum2, SEXP bucketMax2, SEXP 
     wt = REAL(wt2);
     treatment = REAL(treatment2);
     minsize = asInteger(minsize2);
-    propensity = asReal(p2);
+    propensity = REAL(p2); /*change for vector*/
     split_alpha = asReal(split_alpha2);
     cv_alpha = asReal(cv_alpha2);
     method = asInteger(method2); 
@@ -167,7 +167,7 @@ causalTree(SEXP ncat2, SEXP split_Rule2, SEXP bucketnum2, SEXP bucketMax2, SEXP 
     
     ct.xvar = REAL(xvar2);
     ct.NumXval = xvals;
-    
+    ct.propensity = REAL(p2); /*add vector*/
     
     dptr = REAL(xmat2);
     ct.xdata = (double **) ALLOC(ct.nvar, sizeof(double *));
@@ -199,6 +199,7 @@ causalTree(SEXP ncat2, SEXP split_Rule2, SEXP bucketnum2, SEXP bucketMax2, SEXP 
     ct.ytemp = (double **) ALLOC(n, sizeof(double *));
     ct.wtemp = (double *) ALLOC(n, sizeof(double));
     ct.trtemp = (double *) ALLOC(n, sizeof(double));
+    ct.ptemp = (double *) ALLOC(n, sizeof(double)); /*allocate space for propensity*/
     
     /*
      * create a matrix of sort indices, one for each continuous variable
@@ -292,7 +293,7 @@ causalTree(SEXP ncat2, SEXP split_Rule2, SEXP bucketnum2, SEXP bucketMax2, SEXP 
     } else if (split_Rule == 2) {
         // ct:
         (*ct_eval) (n, ct.ydata, tree->response_est, tree->controlMean, tree->treatMean, 
-         &(tree->risk), wt, treatment, ct.max_y, split_alpha, train_to_est_ratio);
+         &(tree->risk), wt, treatment, ct.max_y, split_alpha, train_to_est_ratio, propensity);
     } else if (split_Rule == 3) {
         //fit
         (*ct_eval) (n, ct.ydata, tree->response_est, tree->controlMean, tree->treatMean, 
