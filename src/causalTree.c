@@ -188,7 +188,7 @@ causalTree(SEXP ncat2, SEXP split_Rule2, SEXP bucketnum2, SEXP bucketMax2, SEXP 
         dptr += ct.num_y;
     }
     ct.max_y = temp2;
-    ct.propensity = propensity;
+    /*ct.propensity = propensity;*/
     
     /*
      * allocate some scratch
