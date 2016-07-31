@@ -205,7 +205,7 @@ void CT(int n, double *y[], double *x, int nclass, int edge, double *improve, do
         }
         
         *improve = best;
-        if (best > 0) {         /* found something */
+        if (best > 10000) {         /* found something */
         csplit[0] = direction;
             *split = (x[where] + x[where + 1]) / 2; 
         }
@@ -316,7 +316,7 @@ void CT(int n, double *y[], double *x, int nclass, int edge, double *improve, do
                 temp = left_effect + right_effect - node_effect;
             
                 
-                if (temp > 100000) {
+                if (temp > best) {
                     best = temp;
                     
                     if (left_temp > right_temp)
