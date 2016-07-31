@@ -290,7 +290,7 @@ causalTree <- function(formula, data, weights, treatment, subset,
 					   crossHonest = as.integer(cv.Honest.num),
 					   as.double(unlist(controls)), # control list in rpart
 					   minsize, # minsize = min_node_size
-					   as.double(propensity),
+					   propensity,
 					   as.integer(xval),
 					   as.integer(xgroups),
 					   as.double(t(init$y)),
