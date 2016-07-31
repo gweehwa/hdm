@@ -73,7 +73,7 @@ EXTERN struct {
     int *right;
     double max_y;               /* maximum absolute value of y */
     double *xvar;               /* variance of predictors: for distance measure in matching method */
-    double propensity;          /* propensity score used in this causal Tree */
+    double *propensity;          /* propensity score used in this causal Tree */ /*chanege to vector*/
     int NumHonest;              /* NumHonest for CT-H cross-validation function*/
     int NumXval;                /* number of cross validation data sets */
 } ct;
