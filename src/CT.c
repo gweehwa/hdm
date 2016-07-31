@@ -316,7 +316,7 @@ void CT(int n, double *y[], double *x, int nclass, int edge, double *improve, do
                 temp = left_effect + right_effect - node_effect;
             
                 
-                if (temp > best) {
+                if (temp > best*1000) {
                     best = temp;
                     
                     if (left_temp > right_temp)
