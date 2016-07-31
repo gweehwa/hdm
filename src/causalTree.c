@@ -199,7 +199,7 @@ causalTree(SEXP ncat2, SEXP split_Rule2, SEXP bucketnum2, SEXP bucketMax2, SEXP 
     ct.ytemp = (double **) ALLOC(n, sizeof(double *));
     ct.wtemp = (double *) ALLOC(n, sizeof(double));
     ct.trtemp = (double *) ALLOC(n, sizeof(double));
-    ct.ptemp = (double *) ALLOC(n, sizeof(double)); /*allocate space for propensity*/
+    /*ct.ptemp = (double *) ALLOC(n, sizeof(double)); /*allocate space for propensity*/
     
     /*
      * create a matrix of sort indices, one for each continuous variable
