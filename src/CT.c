@@ -48,8 +48,8 @@ CTss(int n, double *y[], double *value,  double *con_mean, double *tr_mean,
     double con_sqr_sum = 0., tr_sqr_sum = 0.;
     
     for (i = 0; i < n; i++) {
-        temp1 += *y[i] * wt[i] * treatment[i];
-        temp0 += *y[i] * wt[i] * (1 - treatment[i]);
+        temp1 += *y[i] * wt[i] * treatment[i] * propensity[i];
+        temp0 += *y[i] * wt[i] * (1 - treatment[i]) * propensity[i];
         twt += wt[i];
         ttreat += wt[i] * treatment[i];
         tr_sqr_sum += (*y[i]) * (*y[i]) * wt[i] * treatment[i];
