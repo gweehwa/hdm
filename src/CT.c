@@ -46,17 +46,26 @@ CTss(int n, double *y[], double *value,  double *con_mean, double *tr_mean,
     double effect;
     double tr_var, con_var;
     double con_sqr_sum = 0., tr_sqr_sum = 0.;
+    double invp0 = 0., invp1 = 0., tinvp0 = 0., tinvp1 = 0.; 
+    double tinvsp0 = 0., tinvsp1 = 0.;
     
     for (i = 0; i < n; i++) {
-        temp1 += *y[i] * wt[i] * treatment[i] * propensity[i];
-        temp0 += *y[i] * wt[i] * (1 - treatment[i]) * propensity[i];
+        temp1 += *y[i] * wt[i] * treatment[i];
+        temp0 += *y[i] * wt[i] * (1 - treatment[i]);
         twt += wt[i];
         ttreat += wt[i] * treatment[i];
         tr_sqr_sum += (*y[i]) * (*y[i]) * wt[i] * treatment[i];
         con_sqr_sum += (*y[i]) * (*y[i]) * wt[i] * (1- treatment[i]);
+        invp1 += *y[i] * wt[i] * treatment[i] / propensity[i];
+        invp0 += *y[i] * wt[i] * (1 - treatment[i]) / (1 - propensity[i]);
+        tinvp1 += wt[i] * treatment[i] / propensity[i];
+        tinvp0 += wt[i] * (1 - treatment[i]) / (1 - propensity[i]);
+        tinvsp1 += wt[i] * treatment[i] / propensity[i] / propensity[i];
+        tinvsp0 += wt[i] * (1 - treatment[i]) / (1 - propensity[i]) / (1 - propensity[i]);
     }
 
-    effect = temp1 / ttreat - temp0 / (twt - ttreat);
+    /*effect = temp1 / ttreat - temp0 / (twt - ttreat);*/
+    effect = invp1 / tinvp1 - invp0 / tinvp0; 
     tr_var = tr_sqr_sum / ttreat - temp1 * temp1 / (ttreat * ttreat);
     con_var = con_sqr_sum / (twt - ttreat) - temp0 * temp0 / ((twt - ttreat) * (twt - ttreat));
 
