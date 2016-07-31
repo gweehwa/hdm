@@ -67,7 +67,7 @@ void CTH_rundown(pNode tree, int obs, double *cp, double *xpred, double *xtemp, 
 void CTA_rundown(pNode tree, int obs, double *cp, double *xpred, double *xtemp, int k, double alpha);
 
 void userH_rundown(pNode tree, int obs, double *cp, double *xpred, double *xtemp, int k, 
-                 double alpha, double xtrain_to_est_ratio, double propensity);
+                 double alpha, double xtrain_to_est_ratio, double *propensity);
 void userA_rundown(pNode tree, int obs, double *cp, double *xpred, double *xtemp, int k, double alpha);
 
 void surrogate(pNode me, int n1, int n2);
