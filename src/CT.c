@@ -32,6 +32,7 @@ CTinit(int n, double *y[], int maxcat, char **error,
     *size = 1;
     *train_to_est_ratio = n * 1.0 / ct.NumHonest;
     return 0;
+    Rprintf("\n\n train_to_est_ratio is %f, alpha is %f, and max_y is %f\n", ct.NumHonest, maxcat, who);
 }
 
 
