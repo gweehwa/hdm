@@ -74,7 +74,7 @@ CTss(int n, double *y[], double *value,  double *con_mean, double *tr_mean,
     *risk = 4 * twt * max_y * max_y - alpha * twt * effect * effect + 
     (1 - alpha) * (1 + train_to_est_ratio) * twt * (tr_var /ttreat  + con_var / (twt - ttreat));
     Rprintf("Warning message--at CTss");
-    Rprintf("\n\n train_to_est_ratio is %d, alpha is %d, and max_y is %d\n", train_to_est_ratio, alpha, max_y);
+    Rprintf("\n\n train_to_est_ratio is %e, alpha is %e, and max_y is %e\n", train_to_est_ratio, alpha, max_y);
 }
 
 
